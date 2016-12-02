@@ -1,0 +1,30 @@
+<div>
+    <h1>Add Todo</h1>
+    <div class="form-group">
+        <input class="form-control input-lg" placeholder="Add Todo..." autofocus #todoText>
+        <br>
+        <button class="btn btn-primary btn-block" (click)='createTodo(todoText)'>Create</button>
+    </div>
+</div>
+
+<div *ngFor="let todo of todos">
+    <div class="row">
+        <div class="col-md-1">
+            <input type="checkbox" [checked]="todo.iscompleted" (click)="updateTodoComplete(todo)">
+        </div>
+        <div class="col-md-7">
+            <span [class.hidden]="!isEditing(todo._id,clickedId)">{{todo.text}}</span>
+            <div class="row">
+                <input [class.hidden]="isEditing(todo._id,clickedId)" class="form-control input-lg" (input)="todo.text = $event.target.value" value="{{todo.text}}">
+                <input [class.hidden]="isEditing(todo._id,clickedId)" (click)="updateTodo(todo)" type="button" class="btn btn-default" value="Save">
+                <input [class.hidden]="isEditing(todo._id,clickedId)" (click)="clickedId=0" type="button" class="btn btn-default" value="Cancel">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <input (click)="deleteTodo(todo)" type="button" class="btn btn-danger pull-right col-md-offset-1" value="Delete">
+            <input [class.disabled]="!isEditing(todo._id,clickedId)" (click)="clickedId=todo._id" type="button" class="btn btn-default pull-right" value="Edit">
+        </div>
+    </div>
+    <hr>
+
+</div>
